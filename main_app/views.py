@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Place, User, Photo
+from .forms import ReviewForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
@@ -24,7 +25,8 @@ class PlaceCreate(CreateView):
   
 def places_detail(request, place_id):
   place = Place.objects.get(id=place_id)
-  return render(request, 'places/details.html', {'place': place})
+  review_form = ReviewForm()
+  return render(request, 'places/details.html', {'place': place, 'review_form': review_form})
 
 def user_places(request):
     places = User.objects.places.filter(user=request.user)
@@ -61,4 +63,12 @@ def add_photo(request, place_id):
       photo.save()
     except:
       print('An error occurred uploading file to S3')
+  return redirect('places_detail', place_id=place_id)
+
+def add_review(request, place_id):
+  form = ReviewForm(request.POST)
+  if form.is_valid():
+    new_review = form.save(commit=False)
+    new_review.place_id = place_id
+    new_review.save()
   return redirect('places_detail', place_id=place_id)

@@ -47,25 +47,17 @@ class BronzeMedal(Medal):
     def __str__(self):
         return self.name
 
-class Address(models.Model):
+# Place Information_______
+class Place(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,default=4)
+    name = models.CharField(max_length=100)
+    # Address
     postcode = models.CharField( max_length=50)
     address_line = models.CharField( max_length=255)
     address_line2 = models.CharField( max_length=255)
     state_province = models.CharField(max_length=150)
     town_city = models.CharField( max_length=150)
-
-    class Meta:
-        verbose_name = "Address"
-        verbose_name_plural = "Addresses"
-
-    def __str__(self):
-        return "Address"
-
-# Place Information_______
-class Place(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,)
-    name = models.CharField(max_length=100)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    # Creator's rating
     health_rating = models.CharField(
         max_length=3,
         choices=HEALTH,
@@ -96,6 +88,31 @@ class Photo (models.Model):
 
   def __str__(self):
     return f"Photo for place_id: {self.place_id} @{self.url}"
+
+class Review(models.Model):
+    # user is bugged. Default in place to bypass. Need to find out how to pull "currently logged in".
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=4)
+    place = models.ForeignKey(Place, on_delete=models.CASCADE)
+    content = models.CharField(max_length=150)
+
+    health_rating = models.CharField(
+        max_length=3,
+        choices=HEALTH,
+        default=None
+
+    )
+    service_rating = models.CharField(
+        max_length=1,
+        choices=SERVICE,
+        default=[0][0]
+    )
+    taste_rating = models.CharField(
+        max_length=1,
+        choices=TASTE,
+        default=[0][0]
+    )
+    def __str__(self):
+        return f"ReviewID({self._id}) for {self.place}"
 
 
 class Profile(models.Model):
