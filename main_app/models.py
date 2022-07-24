@@ -74,7 +74,7 @@ class Place(models.Model):
     )
 
     def __str__(self):
-        return f"{self.get_use_display()}"
+        return self.name
 
     def form_valid(self, form):
         form.instance.user = self.request.user
