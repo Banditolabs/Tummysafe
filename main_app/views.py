@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Place, User
+from .models import Place, User, Photo
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 
-
+import uuid, boto3
+S3_BASE_URL = 'https://s3-us-west-2.amazonaws.com/'
+BUCKET = 'tummysafe'
 # Create your views here.
 
 def home(request):
@@ -14,11 +16,15 @@ def home(request):
 
 class PlaceCreate(CreateView):
   model = Place
-  fields = ['name', 'address', 'GPS', 'aggregate']
-  
+  fields = ['name','health_rating','service_rating','taste_rating']
+        
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
+  
+def places_detail(request, place_id):
+  place = Place.objects.get(id=place_id)
+  return render(request, 'places/details.html', {'place': place})
 
 def user_places(request):
     places = User.objects.places.filter(user=request.user)
@@ -37,3 +43,17 @@ def signup(request):
     form = UserCreationForm()
     context = {'form':form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
+
+def add_photo(request, place_id):
+  photo_file = request.FILES.get('photo-file', None)
+  if photo_file:
+    s3 = boto3.Session(profile_name='tummysafe').client('s3')
+    key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+    try:
+      s3.upload_fileobj(photo_file, BUCKET, key)
+      url = f"{S3_BASE_URL}{BUCKET}/{key}"
+      photo = Photo(url=url, place_id=place_id)
+      photo.save()
+    except:
+      print('An error occurred uploading file to S3')
+  return redirect('detail', place_id=place_id)
