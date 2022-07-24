@@ -8,7 +8,13 @@
     <div class="">
       <div class="">
         <h1>{{ place.name }}</h1>
-        <p>Description: {{ place.health_rating }}</p>
+        <p>Health Rating: {{ place.get_health_rating_display }}</p>
+        <p>Service Rating: {{ place.service_rating }}</p>
+        <p>Taste Rating: {{ place.taste_rating }}</p>
+      </div>
+      <div class="">
+        <h2>Address</h2>
+        <p></p>
       </div>
       {% comment %} <div class="card-action">
         <a href="{% url 'cats_update' cat.id %}">Edit</a>

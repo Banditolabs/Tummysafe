@@ -9,11 +9,11 @@ import uuid, boto3
 S3_BASE_URL = 'https://s3-us-west-2.amazonaws.com/'
 BUCKET = 'tummysafe'
 # Create your views here.
-
+# Static views
 def home(request):
   return render(request, 'home.html')
 
-
+# views for the Place class
 class PlaceCreate(CreateView):
   model = Place
   fields = ['name','health_rating','service_rating','taste_rating']
@@ -30,6 +30,11 @@ def user_places(request):
     places = User.objects.places.filter(user=request.user)
     return render(request, 'places/my_places.html', {'places': places})
 
+def all_places(request):
+  places = Place.objects.all()
+  return render(request, 'places/index.html', {'places': places})
+
+# Utility views
 def signup(request):
     error_message = ''
     if request.method == 'POST':
@@ -56,4 +61,4 @@ def add_photo(request, place_id):
       photo.save()
     except:
       print('An error occurred uploading file to S3')
-  return redirect('detail', place_id=place_id)
+  return redirect('places_detail', place_id=place_id)

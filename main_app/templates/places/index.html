@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>All places</h1>
+
+{% for place in places %}
+  <a href="{% url 'places_detail' place.id %}">
+    <div class="">
+        <div class="">
+            <h2 class="">{{ place.name }}</h2>
+            <p>{{ place.address }}</p>
+            <p>Description: {{ place.get_health_rating_display }}</p>
+        </div>
+    </div>
+  </a>
+{% endfor %}
+
+{% endblock %}

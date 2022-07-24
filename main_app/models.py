@@ -47,15 +47,25 @@ class BronzeMedal(Medal):
     def __str__(self):
         return self.name
 
-class Profile(models.Model):
-  user=models.OneToOneField(User,on_delete=models.CASCADE, )
-  medals = models.ManyToManyField(Medal)
+class Address(models.Model):
+    postcode = models.CharField( max_length=50)
+    address_line = models.CharField( max_length=255)
+    address_line2 = models.CharField( max_length=255)
+    state_province = models.CharField(max_length=150)
+    town_city = models.CharField( max_length=150)
 
+    class Meta:
+        verbose_name = "Address"
+        verbose_name_plural = "Addresses"
 
+    def __str__(self):
+        return "Address"
 
+# Place Information_______
 class Place(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,)
     name = models.CharField(max_length=100)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
     health_rating = models.CharField(
         max_length=3,
         choices=HEALTH,
@@ -86,4 +96,10 @@ class Photo (models.Model):
 
   def __str__(self):
     return f"Photo for place_id: {self.place_id} @{self.url}"
+
+
+class Profile(models.Model):
+  user=models.OneToOneField(User,on_delete=models.CASCADE, )
+  medals = models.ManyToManyField(Medal)
+
 
