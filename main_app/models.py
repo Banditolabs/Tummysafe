@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.files import File
+from django.urls import reverse
 from django.contrib.auth.models import User
 from django.forms import CharField, ImageField
 
@@ -52,11 +53,11 @@ class Place(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE,default=4)
     name = models.CharField(max_length=100)
     # Address
-    postcode = models.CharField( max_length=50)
-    address_line = models.CharField( max_length=255)
-    address_line2 = models.CharField( max_length=255)
-    state_province = models.CharField(max_length=150)
-    town_city = models.CharField( max_length=150)
+    postcode = models.CharField(verbose_name = 'Postal Code ', max_length=50)
+    address_line = models.CharField(verbose_name = 'Address', max_length=255)
+    address_line2 = models.CharField(verbose_name = 'Address Continued (optional)', blank= True, max_length=255)
+    state_province = models.CharField(verbose_name = 'State or Province',max_length=150)
+    town_city = models.CharField(verbose_name = 'City', max_length=150)
     # Creator's rating
     health_rating = models.CharField(
         max_length=3,
@@ -77,6 +78,9 @@ class Place(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('places_detail', kwargs={'place_id': self.id})
 
     def form_valid(self, form):
         form.instance.user = self.request.user

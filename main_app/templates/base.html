@@ -17,7 +17,9 @@
             <ul>
             {% if user.is_authenticated %}
                 <li><a href="{% url 'logout' %}">Log Out</a></li>
-
+                <li><a href="{% url 'user_places' %}">My Places</a></li>
+                <li><a href="{% url 'all_places' %}">The Feed</a></li>
+                <li><a href="{% url 'places_create' %}">Add a Discovery</a></li>
             {%else%}
                 <li><a href="{% url 'login' %}">Log In</a></li>
                 <li><a href="{% url 'signup' %}">Sign Up</a></li>

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>My places</h1>
+
+{% for place in places %}
+  <a href="{% url 'places_detail' place.id %}">
+    <div class="">
+        <div class="">
+            <h2 class="">{{ place.name }}</h2>
+            <p>{{ place.address }}</p>
+            <p>Description: {{ place.get_health_rating_display }}</p>
+        </div>
+        <div class="card-action">
+            <a href="{% url 'places_update' place.id %}">Edit</a>
+            <a href="{% url 'places_delete' place.id %}">Delete</a>
+          </div>
+    </div>
+  </a>
+{% endfor %}
+
+{% endblock %}

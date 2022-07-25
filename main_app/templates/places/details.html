@@ -19,10 +19,6 @@
           <p>{{place.state_province}}, {{place.postcode}}</p>
         </div>
       </div>
-      {% comment %} <div class="card-action">
-        <a href="{% url 'cats_update' cat.id %}">Edit</a>
-        <a href="{% url 'cats_delete' cat.id %}">Delete</a>
-      </div> {% endcomment %}
     </div>
     {% for photo in place.photo_set.all %}
       <img class="" src="{{photo.url}}">
