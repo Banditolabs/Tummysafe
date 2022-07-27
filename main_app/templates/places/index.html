@@ -1,18 +1,98 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>All places</h1>
+<section id="hero">
+  <div class="flex flex flex-col-reverse md:flex-row items-center px-6 mx-auto mt-10 space-y-0 md:space-y-0">
+    <div class="flex flex-col mb-32 space-y-12 md:w-1/2">
+      <h1 class="max-w-md text-4xl font-bold text-center md:text-5xl md:textleft">Bringing saftey to the forefront of the streetfood experience. Keep your Tummysafe.</h1>
+    </div>
+    <img href="main_app/static/assets/TummySafe.png" alt="">
+  </div>
 
+  <div class="flex flex-col space-y-8 md:w-1/2">
+
+    <div class="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
+      <div class="rounded-l-full bg-sky-200 md:bg-transparent">
+        <div class="flex items-center space-x-2">
+          <div class="px-4 py-2 text-black rounded-full md:py-1 bg-sky-200">
+            01
+          </div>
+          <h3 class="text-base font-bold md:mb-4 md:hidden">
+            Don't become sick with a foodborne illness.
+          </h3>
+        </div>
+      </div>
+      
+      <div>
+        <h3 class="hidden mb-4 text-lg font-bold md:block">
+          Find a social-proof network for purchasing local food.
+        </h3>
+        <p class="text-black">
+          Whether you're new to the area or used to using word-of-mouth to know where it's safe to eat, stay Tummysafe.
+        </p>
+      </div>
+    </div>
+
+
+    <div class="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
+      <div class="rounded-l-full bg-sky-200 md:bg-transparent">
+        <div class="flex items-center space-x-2">
+          <div class="px-4 py-2 text-black rounded-full md:py-1 bg-sky-200">
+            02
+          </div>
+          <h3 class="text-base font-bold md:mb-4 md:hidden">
+            Earn badges as your trust score grows!
+          </h3>
+        </div>
+      </div>
+      
+      <div>
+        <h3 class="hidden mb-4 text-lg font-bold md:block">
+          Read the experience of others as well as earn badges based off your contributions and trustworthiness. 
+        </h3>
+        <p class="text-black">
+          For TummySafe to keep our users happy and healthy while they're experiencing the true culture of an area, we use advanced algorithms to ensure our badge of trust has great meaning. 
+        </p>
+      </div>
+    </div>
+
+
+    <div class="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
+      <div class="rounded-l-full bg-sky-200 md:bg-transparent">
+        <div class="flex items-center space-x-2">
+          <div class="px-4 py-2 text-black rounded-full md:py-1 bg-sky-200">
+            03
+          </div>
+          <h3 class="text-base font-bold md:mb-4 md:hidden">
+            Connect with local people and grow bonds in the neighborhoods you explore.
+          </h3>
+        </div>
+      </div>
+      
+      <div>
+        <h3 class="hidden mb-4 text-lg font-bold md:block">
+          Connect with local people and grow bonds in the neighborhoods you explore.        
+        </h3>
+        <p class="text-black">
+          TummySafe's mission is to provide a platform where trustworthy reviews can thrive in the street food scene. 
+        </p>
+      </div>
+    </div>
+  </div>
+</section id="hero">
+<div class="container flex flex-col items-center md:flex-row">
 {% for place in places %}
   <a href="{% url 'places_detail' place.id %}">
-    <div class="">
-        <div class="">
+    <div class="border-4 m-3">
+        <div>
             <h2 class="">{{ place.name }}</h2>
-            <p>{{ place.address }}</p>
-            <p>Description: {{ place.get_health_rating_display }}</p>
+            <div class="whitespace-nowrap block">
+              <p>{{ place.address }}</p>
+              <p>Description: {{ place.get_health_rating_display }}</p>
+           </div>
         </div>
     </div>
   </a>
 {% endfor %}
-
+</div>
 {% endblock %}

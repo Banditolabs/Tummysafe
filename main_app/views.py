@@ -12,11 +12,6 @@ import uuid, boto3
 S3_BASE_URL = 'https://s3-us-west-2.amazonaws.com/'
 BUCKET = 'tummysafe'
 # Create your views here.
-# Static views
-def home(request):
-  return render(request, 'home.html')
-
-
 
 # views for the Place class
 
@@ -54,7 +49,7 @@ def user_places(request):
 
 
 def all_places(request):
-  places = Place.objects.all()
+  places = Place.objects.all().order_by('-id')
   return render(request, 'places/index.html', {'places': places})
 
 # Utility views
@@ -65,7 +60,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('home')
+            return redirect('all_places')
         else:
             error_message = 'Invalid sign up - try again'
     form = UserCreationForm()
