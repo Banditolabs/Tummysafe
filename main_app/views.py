@@ -72,7 +72,7 @@ def signup(request):
 def add_photo(request, place_id):
   photo_file = request.FILES.get('photo-file', None)
   if photo_file:
-    s3 = boto3.Session(profile_name='tummysafe').client('s3')
+    s3 = boto3.Session.client('s3')
     key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
     try:
       s3.upload_fileobj(photo_file, BUCKET, key)
