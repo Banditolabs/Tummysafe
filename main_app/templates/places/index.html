@@ -1,17 +1,31 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
 
 <section id="hero">
   <div class="flex flex flex-col-reverse md:flex-row items-center px-6 mx-auto mt-10 space-y-0 md:space-y-0">
     <div class="flex flex-col mb-32 space-y-12 md:w-1/2">
-      <h1 class="max-w-md text-4xl font-bold text-center md:text-5xl md:textleft">Bringing saftey to the forefront of the streetfood experience. Keep your Tummysafe.</h1>
+      <h1 class="max-w-md text-3xl font-bold text-center md:text-4xl md:textleft">Bringing safety to the forefront of the streetfood experience. Keep your Tummysafe.</h1>
     </div>
-    <img href="main_app/static/assets/TummySafe.png" alt="">
+    <div >
+      <img src="{% static 'assets/tummysafe.png' %}" alt="">
+    </div>
+  </div>
+</section id="hero">
+<div class="container flex flex-col md:flex-row items-center px-6 mx-auto mt-10 space-y-0 md:space-y-6" id="description ">
+
+  <div class="flex flex-col mb-auto space-y-12 md:w-1/2">
+    <h2 class="max-w-md text-4xl font-bold text center md:text-left md:text-5xl md:mx-3">
+      What's different about Tummysafe?
+    </h2>
+    <p class="max-w-sm text-center text-darkGrayishBlue md:text-left">
+      Tummysafe uses a patented gamification nural-network to evaluate true trust in our reviews.
+    </p>
   </div>
 
   <div class="flex flex-col space-y-8 md:w-1/2">
-
-    <div class="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
+    <div class="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row ">
       <div class="rounded-l-full bg-sky-200 md:bg-transparent">
         <div class="flex items-center space-x-2">
           <div class="px-4 py-2 text-black rounded-full md:py-1 bg-sky-200">
@@ -32,7 +46,6 @@
         </p>
       </div>
     </div>
-
 
     <div class="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
       <div class="rounded-l-full bg-sky-200 md:bg-transparent">
@@ -56,7 +69,6 @@
       </div>
     </div>
 
-
     <div class="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
       <div class="rounded-l-full bg-sky-200 md:bg-transparent">
         <div class="flex items-center space-x-2">
@@ -79,20 +91,29 @@
       </div>
     </div>
   </div>
-</section id="hero">
-<div class="container flex flex-col items-center md:flex-row">
+
+</div>
+
+<div class="flex flex-wrap justify-center block">
 {% for place in places %}
-  <a href="{% url 'places_detail' place.id %}">
-    <div class="border-4 m-3">
-        <div>
-            <h2 class="">{{ place.name }}</h2>
-            <div class="whitespace-nowrap block">
-              <p>{{ place.address }}</p>
-              <p>Description: {{ place.get_health_rating_display }}</p>
-           </div>
+{% comment %} <div>{{photos.url}}</div> {% endcomment %}
+<div class="bg-sky-200 rounded-lg m-2 ">
+  <div class="max-w-sm bg-white max-h-sm rounded m-4 p-4 overflow-hidden shadow-lg hover:text-sky-400">
+    <div class="container flex flex-col items-center md:flex-row">
+      <img class="w-full" src="{{place.photo_set.all.url}}" alt="Photo">
+      <a href="{% url 'places_detail' place.id %}">
+        <div class="px-6 whitespace-nowrap py-4">
+                <h2 class="font-bold text-xl mb-2">{{ place.name }}</h2>
+                <div class="block">
+                  <p class="text-gray-700 text-base">{{ place.address }}</p>
+                  <p class="text-gray-700 text-base">Description: {{ place.get_health_rating_display }}</p>
+              </div>
         </div>
+      </a>
     </div>
-  </a>
+  </div>
+</div>
 {% endfor %}
 </div>
+
 {% endblock %}

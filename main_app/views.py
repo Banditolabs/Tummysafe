@@ -50,7 +50,8 @@ def user_places(request):
 
 def all_places(request):
   places = Place.objects.all().order_by('-id')
-  return render(request, 'places/index.html', {'places': places})
+  photos = Photo.objects.all()
+  return render(request, 'places/index.html', {'places': places, 'photos':photos})
 
 # Utility views
 def signup(request):
