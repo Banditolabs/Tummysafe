@@ -2,21 +2,31 @@
 {% block content %}
 
 <h1>My places</h1>
-
+<div class="flex flex-row">
 {% for place in places %}
-  <a href="{% url 'places_detail' place.id %}">
-    <div class="">
-        <div class="">
-            <h2 class="">{{ place.name }}</h2>
-            <p>{{ place.address }}</p>
-            <p>Description: {{ place.get_health_rating_display }}</p>
-        </div>
-        <div class="card-action">
-            <a href="{% url 'places_update' place.id %}">Edit</a>
-            <a href="{% url 'places_delete' place.id %}">Delete</a>
-          </div>
+  <div class="max-w-sm w-full lg:max-w-full lg:flex">
+    <div class="border-r border-b border-l border-gray-400 lg:border-l lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+      <div class="mb-8">
+        <a href="{% url 'places_detail' place.id %}">
+          <div class="text-gray-900 font-bold text-xl mb-2">{{ place.name }}</div>
+          <p class="text-gray-700 text-base">{{ place.get_health_rating_display }}</p>
+          <p class="text-grey-900 text-base text-xl mb-2">{{ place.address }}</p>
+        </a>
+      </div>
+      <div class="flex items-center">
+        <a href="{% url 'places_update' place.id %}">
+          <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+            Update
+          </button>
+        </a>
+        <a href="{% url 'places_delete' place.id %}">
+          <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+            Delete
+          </button>
+        </a>
+      </div>
     </div>
-  </a>
+  </div>
 {% endfor %}
-
+</div>
 {% endblock %}
