@@ -2,12 +2,12 @@
 {% block content %}
 
 
-<div class="row">
+<div class="flex items-center flex-col">
   <!-- Column 1 -->
   <div class="">
     <div class="">
       <div class="">
-        <h1>{{ place.name }}</h1>
+        <h1 class="max-w-md text-3xl font-bold text-center md:text-4xl md:textleft mb-6">{{ place.name }}</h1>
         <p>Health Rating: {{ place.get_health_rating_display }}</p>
         <p>Service Rating: {{ place.service_rating }}</p>
         <p>Taste Rating: {{ place.taste_rating }}</p>
@@ -20,11 +20,7 @@
         </div>
       </div>
     </div>
-    {% for photo in place.photo_set.all %}
-      <img class="" src="{{photo.url}}">
-    {% empty %}
-      <div class="">No Photos Uploaded</div>
-    {% endfor %}
+    
     <form action="{% url 'add_photo' place.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
       {% csrf_token %}
       <input type="file" name="photo-file">
@@ -33,6 +29,21 @@
   </form>
   </div>
 </div>
+<div class=" flex flex-row items-center rounded-xl overflow-auto p-8">
+  <div class="">
+    <div class=" max-w-xl inset-0 -top-8 -bottom-8 grid grid-cols-1 sm:grid-cols-3 gap-8">
+      {% for photo in place.photo_set.all %}
+      <div class="relative aspect-w-16 aspect-h-9">
+        <img class="w-full object-cover rounded-lg" src="{{photo.url}}">
+      </div>
+      {% empty %}
+      <div class="">No Photos Uploaded</div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+
 
 <hr>
 
